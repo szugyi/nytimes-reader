@@ -2,13 +2,18 @@ package io.szugyi.nytimes.data;
 
 import android.support.annotation.NonNull;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.szugyi.nytimes.BuildConfig;
+import io.szugyi.nytimes.data.model.Article;
+import io.szugyi.nytimes.data.model.MostPopularApiResult;
 
 public class RepositoryImpl implements Repository {
+    private static final String ALL_SECTIONS = "all-sections";
+    private static final int DEFAULT_PERIOD = 7;
 
     private final NytimesApi api;
 
@@ -19,16 +24,8 @@ public class RepositoryImpl implements Repository {
 
     @NonNull
     @Override
-    public Observable<String> search(String query) {
-        return api.search(query)
-                .flatMap(result -> {
-                    try {
-                        String str = result.string();
-                        return Observable.just(str);
-                    } catch (IOException e) {
-                        return Observable.error(e);
-                    }
-                });
-
+    public Observable<List<Article>> getArticles() {
+        return api.getArticles(ALL_SECTIONS, DEFAULT_PERIOD, BuildConfig.API_KEY)
+                .map(MostPopularApiResult::getResults);
     }
 }

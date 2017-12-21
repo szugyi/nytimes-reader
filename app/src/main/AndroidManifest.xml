@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:name=".NytimesApplication">
         <activity
-            android:name=".MainActivityImpl"
+            android:name=".articles.ArticleListActivityImpl"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
