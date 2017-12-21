@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+apply from: "${project.code_quality_rootDir}/config/quality/quality.android.gradle"
+
+def keystorePropsFile = rootProject.file("keystore.properties")
+def keystoreProps = new Properties()
+keystoreProps.load(new FileInputStream(keystorePropsFile))
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "io.szugyi.nytimes"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ['resourcePackageName': android.defaultConfig.applicationId,
+                             'classSuffix'        : "Impl"]
+            }
+        }
+    }
+
+    signingConfigs {
+        signingKey {
+            storeFile file(keystoreProps['storeFile'])
+            storePassword keystoreProps['storePassword']
+            keyAlias keystoreProps['keyAlias']
+            keyPassword keystoreProps['keyPassword']
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        mock {
+            dimension "default"
+            applicationIdSuffix ".mock"
+        }
+        integration {
+            dimension "default"
+            applicationIdSuffix ".integration"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.signingKey
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signingKey
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        pickFirst 'META-INF/LICENSE'
+    }
+}
+
+ext {
+    androidAnnotationsVersion = "4.4.0"
+    daggerVersion = '2.10'
+    jacksonVersion = '2.8.8'
+    okHttpVersion = '3.8.0'
+    retrofitVersion = '2.3.0'
+    stethoVersion = '1.5.0'
+    supportLibVersion = '26.1.0'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:design:$supportLibVersion"
+    compile "com.android.support:support-vector-drawable:$supportLibVersion"
+    compile 'com.jakewharton.timber:timber:4.6.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.7'
+
+    annotationProcessor "org.androidannotations:androidannotations:$androidAnnotationsVersion"
+    compile "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
+
+    integrationCompile "com.facebook.stetho:stetho:$stethoVersion"
+    integrationCompile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+    integrationCompile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    integrationCompile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    integrationCompile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    integrationCompile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    integrationCompile "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+    integrationCompile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    integrationCompile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    integrationCompile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    compile "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    provided 'javax.annotation:jsr250-api:1.0'
+}

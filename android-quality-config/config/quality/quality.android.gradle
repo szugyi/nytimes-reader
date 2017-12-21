@@ -1,0 +1,107 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+checkstyle {
+    toolVersion = "8.1"
+}
+
+pmd {
+    toolVersion = '5.8.1'
+}
+
+findbugs {
+    toolVersion = '3.0.1'
+}
+
+def variants = (project.plugins.hasPlugin('android-library') ?
+        project.android.libraryVariants :
+        project.android.applicationVariants)
+
+variants.all { variant ->
+    def checkstyleTask = task("checkstyle${variant.name.capitalize()}", type: Checkstyle) {
+        description "Analyze ${variant.name} code with the checkstyle tool"
+        group "Verification"
+
+        def name = variant.buildType.name
+
+        ignoreFailures = false
+        configFile file("${project.code_quality_rootDir}/config/quality/checkstyle/checkstyle.xml")
+        configProperties.checkstyleSuppressionsPath = file("${project.code_quality_rootDir}/config/quality/checkstyle/suppressions.xml").absolutePath
+
+        source variant.javaCompile.source
+        classpath = project.fileTree(variant.javaCompile.destinationDir)
+        exclude('**/BuildConfig.java')
+        exclude('**/R.java')
+
+        reports {
+            xml.enabled = true
+            xml.destination = file("${project.buildDir}/reports/checkstyle/checkstyle-${name}-output.xml")
+
+            html.enabled = true
+            html.destination = file("${project.buildDir}/reports/checkstyle/checkstyle-${name}-output.html")
+        }
+        dependsOn variant.javaCompile
+    }
+
+    def findBugTask = task("findbugs${variant.name.capitalize()}", type: FindBugs) {
+        description "Analyze ${variant.name} code with the findbugs tool"
+        group "Verification"
+
+        ignoreFailures = false
+        effort = "max"
+        reportLevel = "high"
+
+        classes = files(variant.javaCompile.destinationDir)
+        excludeFilter = new File("${project.code_quality_rootDir}/config/quality/findbugs/findbugs-filter.xml")
+        source = variant.javaCompile.source
+        classpath = variant.javaCompile.classpath
+
+        reports {
+            html.enabled = false
+            html.destination = file("$project.buildDir/reports/findbugs/findbugs-${variant.name}-output.html")
+
+            xml.withMessages = true
+            xml.destination = file("$project.buildDir/reports/findbugs/findbugs-${variant.name}-output.xml")
+        }
+
+        dependsOn variant.javaCompile
+    }
+
+    def pmdTask = task("pmd${variant.name.capitalize()}", type: Pmd) {
+        description "Analyze ${variant.name} code with the pmd tool"
+        group "Verification"
+
+        ignoreFailures = false
+        ruleSetFiles = files("${project.code_quality_rootDir}/config/quality/pmd/pmd-ruleset.xml")
+
+        source = variant.javaCompile.source
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        reports {
+            xml.enabled = true
+            xml.destination = file("${project.buildDir}/reports/pmd/pmd-${variant.name}-output.xml")
+
+            html.enabled = true
+            html.destination = file("${project.buildDir}/reports/pmd/pmd-${variant.name}-output.html")
+        }
+
+    }
+
+    def checkTask = task "check${variant.name.capitalize()}" {
+        description "Runs checkstyle, pmd, findbugs and lint on ${variant.name}"
+        group "Verification"
+    }
+    checkTask.dependsOn checkstyleTask, pmdTask, findBugTask, "lint${variant.name.capitalize()}"
+    project.tasks.getByName("check").dependsOn checkTask
+}
+
+android {
+    lintOptions {
+        abortOnError true
+        lintConfig file("${project.code_quality_rootDir}/config/quality/lint/lint.xml")
+        xmlReport true
+        htmlReport true
+    }
+}
