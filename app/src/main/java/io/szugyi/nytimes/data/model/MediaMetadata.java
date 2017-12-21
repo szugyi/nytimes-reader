@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "height",
     "width"
 })
-public class MediaMetadatum {
+public class MediaMetadata {
 
     @JsonProperty("url")
     private String url;

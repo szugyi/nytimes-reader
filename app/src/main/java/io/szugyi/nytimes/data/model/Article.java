@@ -52,7 +52,7 @@ public class Article {
     @JsonProperty("views")
     private Long views;
     @JsonProperty("media")
-    private List<Medium> media = null;
+    private List<Media> media = null;
 
     public String getUrl() {
         return url;
@@ -110,11 +110,11 @@ public class Article {
         this.title = title;
     }
 
-    public String get_abstract() {
+    public String getAbstract() {
         return _abstract;
     }
 
-    public void set_abstract(String _abstract) {
+    public void setAbstract(String _abstract) {
         this._abstract = _abstract;
     }
 
@@ -158,11 +158,11 @@ public class Article {
         this.views = views;
     }
 
-    public List<Medium> getMedia() {
+    public List<Media> getMedia() {
         return media;
     }
 
-    public void setMedia(List<Medium> media) {
+    public void setMedia(List<Media> media) {
         this.media = media;
     }
 }

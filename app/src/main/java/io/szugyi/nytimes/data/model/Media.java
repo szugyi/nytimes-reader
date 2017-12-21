@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "approved_for_syndication",
     "media-metadata"
 })
-public class Medium {
+public class Media {
 
     @JsonProperty("type")
     private String type;
@@ -28,7 +28,7 @@ public class Medium {
     @JsonProperty("approved_for_syndication")
     private Integer approvedForSyndication;
     @JsonProperty("media-metadata")
-    private List<MediaMetadatum> mediaMetadata = null;
+    private List<MediaMetadata> mediaMetadata = null;
 
     public String getType() {
         return type;
@@ -70,11 +70,11 @@ public class Medium {
         this.approvedForSyndication = approvedForSyndication;
     }
 
-    public List<MediaMetadatum> getMediaMetadata() {
+    public List<MediaMetadata> getMediaMetadata() {
         return mediaMetadata;
     }
 
-    public void setMediaMetadata(List<MediaMetadatum> mediaMetadata) {
+    public void setMediaMetadata(List<MediaMetadata> mediaMetadata) {
         this.mediaMetadata = mediaMetadata;
     }
 }
