@@ -2,9 +2,12 @@ package io.szugyi.nytimes.data;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.szugyi.nytimes.data.model.Article;
 
 public class RepositoryImpl implements Repository {
 
@@ -14,7 +17,7 @@ public class RepositoryImpl implements Repository {
 
     @NonNull
     @Override
-    public Observable<String> search(String query) {
-        return Observable.just("Mock search: " + query);
+    public Observable<List<Article>> getArticles() {
+        return Observable.empty();
     }
 }

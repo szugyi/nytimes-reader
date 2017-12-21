@@ -94,6 +94,9 @@ dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$androidAnnotationsVersion"
     implementation "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
 
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     integrationImplementation "com.facebook.stetho:stetho:$stethoVersion"
     integrationImplementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
     integrationImplementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
@@ -101,9 +104,6 @@ dependencies {
     integrationImplementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     integrationImplementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     integrationImplementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
-    integrationImplementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
-    integrationImplementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
-    integrationImplementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     provided 'org.glassfish:javax.annotation:10.0-b28'
