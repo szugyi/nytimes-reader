@@ -1,4 +1,4 @@
-package io.szugyi.nytimes;
+package io.szugyi.nytimes.data;
 
 import android.support.annotation.NonNull;
 
@@ -6,11 +6,10 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class DataPresenterImpl implements DataPresenter {
+public class RepositoryImpl implements Repository {
 
     @Inject
-    public DataPresenterImpl() {
-        // Dagger needs an injectable constructor
+    public RepositoryImpl() {
     }
 
     @NonNull

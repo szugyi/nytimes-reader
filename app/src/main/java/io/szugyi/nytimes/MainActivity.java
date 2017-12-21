@@ -3,7 +3,6 @@ package io.szugyi.nytimes;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -13,14 +12,16 @@ import org.androidannotations.annotations.ViewById;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.szugyi.nytimes.data.Repository;
 import timber.log.Timber;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DaggerAppCompatActivity {
 
     @Inject
-    DataPresenter presenter;
+    Repository repository;
 
     @ViewById(R.id.message)
     TextView mTextMessage;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        NytimesApplication.getInstance().getApplicationComponent().inject(this);
         testDi();
     }
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testDi() {
-        presenter.search("test")
+        repository.search("test")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(string -> {
                     Timber.d(string);

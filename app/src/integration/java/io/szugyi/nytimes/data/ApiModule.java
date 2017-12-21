@@ -1,4 +1,4 @@
-package io.szugyi.nytimes;
+package io.szugyi.nytimes.data;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.schedulers.Schedulers;
+import io.szugyi.nytimes.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

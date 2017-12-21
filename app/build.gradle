@@ -69,7 +69,7 @@ android {
 
 ext {
     androidAnnotationsVersion = "4.4.0"
-    daggerVersion = '2.10'
+    daggerVersion = '2.11'
     jacksonVersion = '2.8.8'
     okHttpVersion = '3.8.0'
     retrofitVersion = '2.3.0'
@@ -79,28 +79,31 @@ ext {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:appcompat-v7:$supportLibVersion"
-    compile "com.android.support:design:$supportLibVersion"
-    compile "com.android.support:support-vector-drawable:$supportLibVersion"
-    compile 'com.jakewharton.timber:timber:4.6.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.7'
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support:design:$supportLibVersion"
+    implementation "com.android.support:support-vector-drawable:$supportLibVersion"
+    implementation 'com.jakewharton.timber:timber:4.6.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
 
     annotationProcessor "org.androidannotations:androidannotations:$androidAnnotationsVersion"
-    compile "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
+    implementation "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
 
-    integrationCompile "com.facebook.stetho:stetho:$stethoVersion"
-    integrationCompile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
-    integrationCompile "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    integrationCompile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    integrationCompile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    integrationCompile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    integrationCompile "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
-    integrationCompile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
-    integrationCompile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
-    integrationCompile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    integrationImplementation "com.facebook.stetho:stetho:$stethoVersion"
+    integrationImplementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+    integrationImplementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    integrationImplementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    integrationImplementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    integrationImplementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    integrationImplementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+    integrationImplementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    integrationImplementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    integrationImplementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 
-    compile "com.google.dagger:dagger:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
-    provided 'javax.annotation:jsr250-api:1.0'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
 }

@@ -1,4 +1,4 @@
-package io.szugyi.nytimes;
+package io.szugyi.nytimes.data;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;

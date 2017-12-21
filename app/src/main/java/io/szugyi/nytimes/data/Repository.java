@@ -1,10 +1,10 @@
-package io.szugyi.nytimes;
+package io.szugyi.nytimes.data;
 
 import android.support.annotation.NonNull;
 
 import io.reactivex.Observable;
 
-public interface DataPresenter {
+public interface Repository {
 
     @NonNull
     Observable<String> search(String query);

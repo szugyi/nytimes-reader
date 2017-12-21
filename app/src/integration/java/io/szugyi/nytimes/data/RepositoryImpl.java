@@ -1,4 +1,4 @@
-package io.szugyi.nytimes;
+package io.szugyi.nytimes.data;
 
 import android.support.annotation.NonNull;
 
@@ -8,12 +8,12 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class DataPresenterImpl implements DataPresenter {
+public class RepositoryImpl implements Repository {
 
     private final NytimesApi api;
 
     @Inject
-    public DataPresenterImpl(NytimesApi api) {
+    public RepositoryImpl(NytimesApi api) {
         this.api = api;
     }
 
@@ -29,5 +29,6 @@ public class DataPresenterImpl implements DataPresenter {
                         return Observable.error(e);
                     }
                 });
+
     }
 }
