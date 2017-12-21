@@ -28,6 +28,9 @@
     @retrofit2.http.* <methods>;
 }
 
+# Picasso
+-dontwarn com.squareup.okhttp.**
+
 # Jackson core
 -keepnames class com.fasterxml.jackson.** { *; }
 
@@ -51,3 +54,9 @@
     public ** writeValueAsString(**);
 }
 -keepattributes *Annotation*,EnclosingMethod,Signature
+
+# API models
+-keep class io.szugyi.nytimes.data.model.** { *; }
+
+# Dagger
+-dontwarn com.google.errorprone.annotations.*
